@@ -82,14 +82,14 @@ class WMS extends XYZ {
         url,
         layers,
         format = "image/png",
-        version = "1.1.1",
+        version = "1.3.0",
         request = "GetMap",
         srs,
         bbox,
         width = 256,
         height = 256) {
-        return `${url}/wms?LAYERS=${layers}&FORMAT=${format}&SERVICE=WMS&VERSION=${version}&REQUEST=${request}
-        &SRS=${srs}&BBOX=${bbox}&WIDTH=${width}&HEIGHT=${height}`;
+            console.log(bbox+" ("+srs+")");
+        return `${url}/wms?LAYERS=${layers}&FORMAT=${format}&SERVICE=WMS&VERSION=${version}&REQUEST=${request}&CRS=${srs}&BBOX=${bbox}&WIDTH=${width}&HEIGHT=${height}`;
     }
 
     static get_bbox_v1_1_1(extent) {
@@ -97,7 +97,9 @@ class WMS extends XYZ {
     }
 
     static get_bbox_v1_3_0(extent) {
-        return extent.getSouth() + "," + extent.getWest() + "," + extent.getNorth() + "," + extent.getEast();
+        return extent.getWest() + "," + extent.getSouth() + "," + extent.getEast() + "," + extent.getNorth();
+
+        // return extent.getSouth() + "," + extent.getWest() + "," + extent.getNorth() + "," + extent.getEast();
     }
 
     _checkSegment(segment) {
